@@ -5,12 +5,13 @@ import {
   openAttestationDnsTxtIdentityProof,
   openAttestationDnsDidIdentityProof,
   openAttestationDidIdentityProof,
-} from "./";
+} from ".";
 import { getProvider } from "./common/utils";
 
 import v3DidSignedRaw from "../test/fixtures/v3/did-signed.json";
 import v3DnsDidSignedRaw from "../test/fixtures/v3/dnsdid-signed.json";
 import v3DocumentStoreIssuedRaw from "../test/fixtures/v3/documentStore-issued.json";
+
 const v3DidSigned = v3DidSignedRaw as v3.SignedWrappedDocument;
 const v3DnsDidSigned = v3DnsDidSignedRaw as v3.SignedWrappedDocument;
 const v3DocumentStoreIssued = v3DocumentStoreIssuedRaw as v3.WrappedDocument;
@@ -74,7 +75,7 @@ const malformedVerificationFragment2: VerificationFragment = {
   name: "OpenAttestationDnsDidIdentityProof",
   type: "ISSUER_IDENTITY",
   data: undefined,
-  status: "VALID"
+  status: "VALID",
 };
 
 describe("getIdentityProofFragment", () => {
@@ -98,8 +99,10 @@ describe("getIdentifier", () => {
     });
   });
   it("should throw an error when fragment.data cannot be handled", () => {
-    expect(() => getIdentifier(getIdentityProofFragment([verificationFragment1, malformedVerificationFragment2]))).toThrowError("No data property found in fragment, malformed fragment")
-  })
+    expect(() =>
+      getIdentifier(getIdentityProofFragment([verificationFragment1, malformedVerificationFragment2]))
+    ).toThrowError("No data property found in fragment, malformed fragment");
+  });
 
   describe("v2", () => {
     it("should return a DNS identity proof if issuer fragment is of type OpenAttestationDnsTxtIdentityProof", () => {
